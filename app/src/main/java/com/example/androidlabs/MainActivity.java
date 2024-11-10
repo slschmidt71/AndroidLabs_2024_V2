@@ -1,130 +1,106 @@
 package com.example.androidlabs;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
-import com.example.androidlabs.R;
+import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class MainActivity extends AppCompatActivity {
-
-    public static final String ITEM_NAME = "NAME";
-    public static final String ITEM_HEIGHT = "HEIGHT";
-    public static final String ITEM_MASS = "MASS";
-    private int position;
-    private LinearLayout parent;
-    ArrayAdapter<String> theAdapter;
-
-    ArrayList<String> source = new ArrayList<>(Arrays.asList("One", "Two", "Three", "Four"));
-
-   // ArrayList<String> source = new ArrayList<>(Arrays.asList(ITEM_NAME, ITEM_HEIGHT, ITEM_MASS));
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyHTTPRequest req = new MyHTTPRequest();
-        req.execute("http://swapi.dev/api/people/?format=json");
+        //For toolbar:
+        Toolbar tBar = findViewById(R.id.toolbar);
+        setSupportActionBar(tBar);
 
 
-        ListView lvStarWars = (ListView) findViewById(R.id.lvStarWars);
+        //For NavigationDrawer:
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, tBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-//        boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
-
-        theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, source);
-        lvStarWars.setAdapter(theAdapter);
-
-
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
 
 
-    private class MyHTTPRequest extends AsyncTask<String,Integer,String>
-    {
-      // public String doInBackground(String ... args)
-    //  public String[] doInBackground(String ITEM_NAME,String ITEM_HEIGHT, String ITEM_MASS )
-        {
-           // while
+	    /* slide 15 material:
+	    MenuItem searchItem = menu.findItem(R.id.search_item);
+        SearchView sView = (SearchView)searchItem.getActionView();
+        sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }  });
 
+	    */
 
-
-            publishProgress(25);
-            publishProgress(50);
-            publishProgress(75);
-          //  return "DONE";
-
-           //  return result;
-        }
-
-        public void onProgressUpdate(Integer ... args)
-        {
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String[] result = new String[]{ITEM_NAME,ITEM_HEIGHT,ITEM_MASS};
-
-            return null;
-        }
-
-        public void onPostExecute(String fromDoInBackground) {
-            //super.onPostExecute(fromDoInBackground);
-
-            Log.i("HTTP",fromDoInBackground);
-        }
-
+        return true;
     }
 
-    protected class runListView extends BaseAdapter {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String message = null;
+        //Look at your menu XML file. Put a case for every id in that file:
+        int id = item.getItemId();
+        if (id == R.id.item1) {
+            message = "You clicked item 1";
+        } else if (id == R.id.item2) {
+            message = "You clicked item 2";
+        }
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        return true;
+    }
 
-        @Override
-        public int getCount() {
-            return 0;
+
+    // Needed for the OnNavigationItemSelected interface:
+    @Override
+    public boolean onNavigationItemSelected( MenuItem item) {
+
+        String message = null;
+
+        switch(item.getItemId())
+        {
+            case R.id.item1:
+                message = "You clicked item 1";
+                break;
+             case R.id.item2:
+                message = "You clicked item 2";
+                break;
+
         }
 
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
 
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
+        Toast.makeText(this, "NavigationDrawer: " + message, Toast.LENGTH_LONG).show();
+        return false;
 
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ListView myList = findViewById(R.id.lvStarWars);
 
-            LayoutInflater inflater = getLayoutInflater();
-
-            // make a new row:
-            View newView = inflater.inflate(R.layout.fragment_details, parent, false);
-
-            TextView tView = newView.findViewById(R.id.tvNameFillMe);
-            tView.setText( getItem(position).toString() );
-
-            return newView;
-           // return view;
-        }
     }
 
 
