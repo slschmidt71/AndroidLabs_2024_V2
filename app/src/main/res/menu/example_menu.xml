@@ -5,15 +5,15 @@
 
     <item android:id="@+id/item1"
         android:title="@string/Name"
-        android:icon="@drawable/freeicon"
+        android:icon="@drawable/sad"
         android:orderInCategory="100"
         app:showAsAction="always"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
 
 
     <item android:id="@+id/item2"
         android:title="@string/Name2"
-        android:icon="@drawable/freeicon2"
-        android:orderInCategory="100"
+        android:icon="@drawable/silly"
+        android:orderInCategory="200"
         app:showAsAction="always"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
 
 

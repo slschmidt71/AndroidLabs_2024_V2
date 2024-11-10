@@ -15,8 +15,8 @@
     <string name="name_edittext">Enter Your Name</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="Name" />
-    <string name="open" />
-    <string name="close" />
-    <string name="Name2" />
+    <string name="Name" translatable="false">Choice1</string>
+    <string name="Name2" translatable="false">Choice2</string>
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
 </resources>

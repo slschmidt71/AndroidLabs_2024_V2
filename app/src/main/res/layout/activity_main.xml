@@ -22,16 +22,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/aButton"
-                android:id="@+id/insert"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hello drawer"/>
+                android:text="main activity"/>
         </LinearLayout>
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
